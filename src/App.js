@@ -27,9 +27,14 @@ const App = ({ signOut }) => {
   }, []);
 
   async function fetchNotes() {
-    const apiData = await client.graphql({ query: listNotes});
-    const notesFromAPI = apiData.data.listNotes.items;
-    setNotes(notesFromAPI);
+    try {
+      const apiData = await client.graphql({ query: listNotes });
+      const notesFromAPI = apiData.data.listNotes.items;
+      setNotes(notesFromAPI);
+      console.log("Notes fetched successfully:", notesFromAPI);
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
   }
 
   async function createNote(event) {
